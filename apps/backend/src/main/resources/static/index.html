@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE com Spring</title>
+</head>
+<body>
+    <h1>Server-Sent Events (SSE) com Spring</h1>
+    <div id="events"></div>
+
+    <script>
+        const eventSource = new EventSource("/tasks/sse");
+
+        eventSource.onmessage = (event) => {
+            const div = document.createElement("div");
+            div.textContent = `Event received: ${event.data}`;
+            document.getElementById("events").appendChild(div);
+        };
+
+        eventSource.onerror = (error) => {
+            console.error("Error occurred:", error);
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>
